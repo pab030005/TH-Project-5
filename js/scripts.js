@@ -10,9 +10,9 @@ let eeTile;
 let eeModal
 let eeTilesArray = []
 let eeModalArray = []
-for (let i=0;i<12; i++){      //from here below repeats 12 times so that data from 12 random employees are pulled from API
-                              //(cont.) then an employee directory tile is created and appended to gallery, with data points
-                              //(cont.)   pulled from the API (lines 18 -30).
+for (let i=0;i<12; i++){   //from here below repeats 12 times so that data from 12 random employees are pulled from API
+                           //(cont.) then an employee directory tile is created and appended to gallery, with data points
+                           //(cont.)   pulled from the API (lines 18 -30).
 
 fetch(url)                    //fetch API
   .then(function(response) {
@@ -67,10 +67,11 @@ fetch(url)                    //fetch API
                   <p class="modal-text">Birthday: ${eeDOB}</p>
               </div>
           </div>`
+
         eeModalArray.push(eeModal)    //employee modals are pushed & stored in array whch is used later to add to corresponing
                                       //(cont.) employee tile when it is cilcked.
 
-            eeTilesArray[i].addEventListener("click", (e) => {  //event listener is added to each employee tile for click
+        eeTilesArray[i].addEventListener("click", (e) => {  //event listener is added to each employee tile for click
             eeTilesArray[i].parentNode.parentNode.appendChild(eeModalArray[i])    //now the modal is appended, upon click of tiles
                                                                                   //i index used to match the corresponding modal
             eeModalArray[i].style.display = "block";           //modal is visable when clicked as the event listener on line 75
@@ -78,11 +79,9 @@ fetch(url)                    //fetch API
             eeModalArray[i].firstElementChild
                             .firstElementChild
                               .firstElementChild.addEventListener("click", () => {
-              eeModalArray[i].style.display = "none"
-            }
-          )
-          })
-
+                                  eeModalArray[i].style.display = "none"
+                                })
+                              })
       })
 
   };    /*for loop on line 8 does executes all this 12 times, on each of the 12 users fetched from the API, creating &
