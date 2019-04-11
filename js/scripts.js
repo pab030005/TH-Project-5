@@ -3,35 +3,33 @@ TREEHOUSE FS JAVASCRIPT PROJECT 5
 PAT BARTON, 04/07/2019
 */
 
-const url = 'https://randomuser.me/api/'; //random API url
+const url = "https://randomuser.me/api/?results=12&"; //random API url
 
-//global variables to be manipulated locally within function starting on line 10
+//global variables to be manipulated locally within function starting on line 19
 let eeTile;
 let eeModal
 let eeTilesArray = []
 let eeModalArray = []
-for (let i=0;i<12; i++){   //from here below repeats 12 times so that data from 12 random employees are pulled from API
-                           //(cont.) then an employee directory tile is created and appended to gallery, with data points
-                           //(cont.)   pulled from the API (lines 18 -30).
+let myJson
 
 fetch(url)                    //fetch API
   .then(function(response) {
-    return response.json();       //returns JSON
-  })
-  .then(function(myJson) {
+    return response.json()    //returns JSON
+  }).then(function(myJson) {  //from here below repeats 12 times so that data from 12 random employees are pulled from API
+  for (let i=0;i<12; i++){
     //pulls necessart elements needed for Tile & Modal from JSON obkect
-    eeImage = myJson.results[0].picture.large;
-    eeEmail = myJson.results[0].email;
-    eeStreet = myJson.results[0].location.street;
-    eeCity = myJson.results[0].location.city;
-    eeState = myJson.results[0].location.state;
-    eeZip = myJson.results[0].location.postcode;
-    eeFirstName = myJson.results[0].name.first;
-    eeLastName = myJson.results[0].name.last;
-    eePhone = myJson.results[0].cell;
-      eeYear = myJson.results[0].dob.date.match(/[0-9]{4}/);      //regex for year/month/day
-      eeMonth = myJson.results[0].dob.date.match(/[0-9]{2}/g)[2];
-      eeDay = myJson.results[0].dob.date.match(/[0-9]{2}/g)[3];
+    eeImage = myJson.results[i].picture.large;    //all data points needed for employee tile and modal pulled
+    eeEmail = myJson.results[i].email;
+    eeStreet = myJson.results[i].location.street;
+    eeCity = myJson.results[i].location.city;
+    eeState = myJson.results[i].location.state;
+    eeZip = myJson.results[i].location.postcode;
+    eeFirstName = myJson.results[i].name.first;
+    eeLastName = myJson.results[i].name.last;
+    eePhone = myJson.results[i].cell;
+      eeYear = myJson.results[i].dob.date.match(/[0-9]{4}/);      //regex for year/month/day
+      eeMonth = myJson.results[i].dob.date.match(/[0-9]{2}/g)[2];
+      eeDay = myJson.results[i].dob.date.match(/[0-9]{2}/g)[3];
     eeDOB = eeMonth + "/" + eeDay + "/" + eeYear;
 
     let gallery = document.querySelector("#gallery");
@@ -51,7 +49,7 @@ fetch(url)                    //fetch API
       </div>`
       eeTilesArray.push(eeTile)   //employee directory tiles are pushed & stored into an array which is used later to sync
                                   //(cont.)accompanying employee modals.
-      //lines 50 - 64 accompanying employee modals for each tile are created but not appended.
+      //lines 55 - 69 accompanying employee modals for each tile are created but not appended.
       eeModal = document.createElement('DIV')
       eeModal.innerHTML = `<div class="modal-container">
           <div class="modal">
@@ -82,8 +80,8 @@ fetch(url)                    //fetch API
                                   eeModalArray[i].style.display = "none"
                                 })
                               })
-      })
+      }})
 
-  };    /*for loop on line 8 does executes all this 12 times, on each of the 12 users fetched from the API, creating &
+      /*for loop on line 19 does executes all this 12 times, on each of the 12 users fetched from the API, creating &
           appending the employee tiles with data points, creating the employee modals with event listener
           to the tile so when clicked the modal is appended and visable, and closed when the x-out button clicked*/
